@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, Vibration } from 'react-native';
 
 export default class Timer extends Component {
     constructor(props) {
@@ -15,13 +15,14 @@ export default class Timer extends Component {
 
     onStart() {
         const intervalId = setInterval(() => {
-            const { minutes, seconds } = this.state;
+            const { minutes, seconds, intervalId } = this.state;
 
             if (!seconds && !minutes) {
+                Vibration.vibrate(1000);
+                clearInterval(intervalId);
                 this.setState({
                     minutes: 0,
-                    seconds: 0,
-                    isActive: false
+                    seconds: 0
                 });
                 return;
             }
@@ -73,17 +74,17 @@ export default class Timer extends Component {
                 </View>
                 <View style={styles.buttonsContainer}>
                     <Button
+                        onPress={() => this.onStart()}
                         title="Start"
                         color="#FF0000"
                         accessibilityLabel="Start countdown"
                         disabled={isActive}
-                        onPress={() => this.onStart()}
                     />
                     <Button
+                        onPress={() => this.onReset()}
                         title="Reset"
                         color="#FF0000"
                         accessibilityLabel="Reset timer"
-                        onPress={() => this.onReset()}
                     />
                 </View>
             </View>
