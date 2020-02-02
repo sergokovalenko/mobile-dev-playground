@@ -8,7 +8,7 @@ export default class App extends Component {
 		return (
 			<View style={styles.container}>
 				<Text style={styles.paragraph}>
-					  It's time to work!
+					Pomodoro 25 x 5 timer
 				</Text>
 				<Timer />
 			</View>
@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
 		padding: 8,
 	},
 	paragraph: {
-		margin: 24,
-		fontSize: 18,
+		marginTop: 24,
+		fontSize: 24,
 		fontWeight: 'bold',
 		textAlign: 'center',
 	},

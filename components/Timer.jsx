@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, Image, Vibration } from 'react-native';
+import { Audio } from 'expo-av';
 
 export default class Timer extends Component {
     constructor(props) {
@@ -7,22 +8,38 @@ export default class Timer extends Component {
   
         this.state = {
             intervalId: 0,
-            minutes: 0,
-            seconds: 10,
-            isActive: false
+            minutes: 25,
+            seconds: 0,
+            isActive: false,
+            hasRest: true
         };
+        this.restSound = new Audio.Sound();
+        this.endSound = new Audio.Sound();
+        this.restSound.loadAsync(require('./../assets/rest.mp3'));
+        this.endSound.loadAsync(require('./../assets/finish.mp3'));
+    }
+
+    playSound() {
+        this.restSound.playAsync();
     }
 
     onStart() {
         const intervalId = setInterval(() => {
-            const { minutes, seconds, intervalId } = this.state;
+            const { minutes, seconds, hasRest, intervalId } = this.state;
 
             if (!seconds && !minutes) {
+                if (hasRest) {
+                    this.restSound.playAsync();
+                } else {
+                    clearInterval(intervalId);
+                    this.endSound.playAsync();
+                }
+
                 Vibration.vibrate(1000);
-                clearInterval(intervalId);
                 this.setState({
-                    minutes: 0,
-                    seconds: 0
+                    minutes: hasRest ? 1 : 0,
+                    seconds: 0,
+                    hasRest: false
                 });
                 return;
             }
