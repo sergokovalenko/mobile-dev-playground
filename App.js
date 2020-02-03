@@ -1,12 +1,14 @@
+import React from 'react';
+
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import HomePage from './navigations/HomePage';
 import SettingsTab from './navigations/SettingsTab';
 
-const RootStack = createStackNavigator({
+const RootStack = createBottomTabNavigator({
 	Home: HomePage,
 	Settings: SettingsTab,
 });
 
-export default createAppContainer(RootStack);
+export default Container = createAppContainer(RootStack);
