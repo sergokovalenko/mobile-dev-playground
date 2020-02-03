@@ -2,8 +2,40 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 export default class SettingsTab extends Component {
+    constructor(props) {
+        super(props);
+        const { work, rest } = this.props.navigation.state.params;
+
+        this.state = {
+            work,
+            rest
+        };
+    }
+
+    changeWorkTime = val => {
+        const { work, rest } = this.state;
+        const newState = {
+            work: work + val === 0 ? work : work + val,
+            rest
+        };
+
+        this.props.navigation.setParams(newState);
+        this.setState(newState);
+    };
+
+    changeRestTime = val => {
+        const { work, rest } = this.state;
+        const newState = {
+            rest: rest + val === 0 ? rest : rest + val,
+            work
+        };
+
+        this.props.navigation.actions.setParams(newState);
+        this.setState(newState);
+    };
+
 	render() {
-        console.log(this.props.navigation);
+        const { work, rest } = this.state;
 
 		return (
 			<View style={styles.container}>
@@ -12,13 +44,15 @@ export default class SettingsTab extends Component {
                     <Button 
                         title="<"
                         color="#FF0000"
+                        onPress={() => this.changeWorkTime(-1)}
                     />
                     <Text style={styles.paragraph}>
-                        25
+                        {work}
                     </Text>
                     <Button 
                         title=">"
                         color="#FF0000"
+                        onPress={() => this.changeWorkTime(1)}
                     />
                 </View>
                 <Text style={styles.label}>Rest</Text>
@@ -26,13 +60,15 @@ export default class SettingsTab extends Component {
                     <Button 
                         title="<"
                         color="#FF0000"
+                        onPress={() => this.changeRestTime(-1)}
                     />
                     <Text style={styles.paragraph}>
-                        5
+                        {rest}
                     </Text>
                     <Button 
                         title=">"
                         color="#FF0000"
+                        onPress={() => this.changeRestTime(1)}
                     />
                 </View>
 			</View>
