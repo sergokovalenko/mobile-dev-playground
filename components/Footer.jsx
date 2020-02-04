@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 export default ({ navigation }) => {
     const [minutes, setMinutes] = useState(25);
@@ -10,19 +10,41 @@ export default ({ navigation }) => {
     return (
         <View style={styles.tabBarStyle}>
             <TouchableOpacity
-                style={styles.tabStyle}
+                style={[styles.tabStyle, styles.withBorder]}
                 onPress={() => navigation.navigate('Home', { minutes, rest })}
-            />
+                
+            >
+                <Text style={styles.label}>Home</Text>
+            </TouchableOpacity>
             <TouchableOpacity
                 style={styles.tabStyle}
                 onPress={() => navigation.navigate('Settings', { updateMinutes, updateRest })}
-            />
+            >
+                <Text style={styles.label}>Settings</Text>
+            </TouchableOpacity>
         </View>
     );
 };
 
-const styles = {
+const styles = StyleSheet.create({
+    tabBarStyle: {
+        height: 40,
+        justifyContent: 'space-evenly',
+        flexDirection: 'row'
+    },
     tabStyle: {
-        color: 'red'
+        backgroundColor: 'red',
+        width: '30%',
+        flex: 1,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
+    withBorder: {
+        borderRightWidth: 1,
+        borderRightColor: 'white'
+    },
+    label: {
+        color: 'white'
     }
-};
+});
