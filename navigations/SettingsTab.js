@@ -13,25 +13,21 @@ export default class SettingsTab extends Component {
     }
 
     changeWorkTime = val => {
-        const { work, rest } = this.state;
-        const newState = {
-            work: work + val === 0 ? work : work + val,
-            rest
-        };
+        const { work } = this.state;
+        const paramsChanger = this.props.navigation.getParam('updateMinutes', () => {});
+        const newWork = work + val === 0 ? work : work + val;
 
-        this.props.navigation.setParams(newState);
-        this.setState(newState);
+        this.setState({ work: newWork });
+        paramsChanger(newWork);
     };
 
     changeRestTime = val => {
-        const { work, rest } = this.state;
-        const newState = {
-            rest: rest + val === 0 ? rest : rest + val,
-            work
-        };
+        const { rest } = this.state;
+        const paramsChanger = this.props.navigation.getParam('updateRest', () => {});
+        const newRest = rest + val === 0 ? rest : rest + val;
 
-        this.props.navigation.actions.setParams(newState);
-        this.setState(newState);
+        this.setState({ rest: newRest });
+        paramsChanger(newRest);
     };
 
 	render() {

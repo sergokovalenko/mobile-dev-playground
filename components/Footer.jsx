@@ -12,7 +12,6 @@ export default ({ navigation }) => {
             <TouchableOpacity
                 style={[styles.tabStyle, styles.withBorder]}
                 onPress={() => navigation.navigate('Home', { minutes, rest })}
-                
             >
                 <Text style={styles.label}>Home</Text>
             </TouchableOpacity>

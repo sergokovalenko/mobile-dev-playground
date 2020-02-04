@@ -8,7 +8,7 @@ import SettingsTab from './navigations/SettingsTab';
 import Footer from './components/Footer';
 
 const RootStack = createBottomTabNavigator({
-		Home: { screen: HomePage },
+		Home: { screen: HomePage, params: { work: 25, rest: 5 } },
 		Settings: { screen: SettingsTab, params: { work: 25, rest: 5 } },
 	},
 	{
