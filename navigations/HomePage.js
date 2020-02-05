@@ -13,7 +13,7 @@ export default class App extends Component {
 				<Text style={styles.paragraph}>
 					Pomodoro {work} x {rest} timer
 				</Text>
-				<Timer />
+				<Timer workTime={work} restTime={rest} />
 			</View>
 		);
 	}
