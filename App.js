@@ -1,32 +1,19 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
-import Timer from './components/Timer';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-export default class App extends Component {
-	render() {
-		return (
-			<View style={styles.container}>
-				<Text style={styles.paragraph}>
-					Pomodoro 25 x 5 timer
-				</Text>
-				<Timer />
-			</View>
-		);
+import HomePage from './navigations/HomePage';
+import SettingsTab from './navigations/SettingsTab';
+import Footer from './components/Footer';
+
+const RootStack = createBottomTabNavigator({
+		Home: { screen: HomePage, params: { work: 25, rest: 5 } },
+		Settings: { screen: SettingsTab, params: { work: 25, rest: 5 } },
+	},
+	{
+		tabBarComponent: props => <Footer {...props} />
 	}
-}
+);
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		backgroundColor: '#ecf0f1',
-		padding: 8,
-	},
-	paragraph: {
-		marginTop: 24,
-		fontSize: 24,
-		fontWeight: 'bold',
-		textAlign: 'center',
-	},
-});
+export default Container = createAppContainer(RootStack);

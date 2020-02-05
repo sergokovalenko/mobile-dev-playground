@@ -8,7 +8,7 @@ export default class Timer extends Component {
   
         this.state = {
             intervalId: 0,
-            minutes: 25,
+            minutes: props.workTime,
             seconds: 0,
             isActive: false,
             hasRest: true
@@ -19,13 +19,27 @@ export default class Timer extends Component {
         this.endSound.loadAsync(require('./../assets/finish.mp3'));
     }
 
-    playSound() {
-        this.restSound.playAsync();
+    componentDidUpdate(oldProps) {
+        const { workTime, restTime } = this.props;
+        const { intervalId } = this.state;
+
+        if (oldProps.workTime !== workTime || oldProps.restTime !== restTime) {
+            clearInterval(intervalId);
+            this.setState({
+                minutes: workTime,
+                seconds: 0,
+                isActive: false,
+                hasRest: true
+            });
+        }
     }
 
-    onStart() {
+    playSound = () => this.restSound.playAsync();
+
+    onStart = () => {
         const intervalId = setInterval(() => {
             const { minutes, seconds, hasRest, intervalId } = this.state;
+            const { restTime } = this.props;
 
             if (!seconds && !minutes) {
                 if (hasRest) {
@@ -37,23 +51,22 @@ export default class Timer extends Component {
 
                 Vibration.vibrate(1000);
                 this.setState({
-                    minutes: hasRest ? 1 : 0,
+                    minutes: hasRest ? restTime : 0,
                     seconds: 0,
                     hasRest: false
                 });
+
                 return;
             }
 
-            if (!seconds) {
-                this.setState({
-                    minutes: minutes - 1,
-                    seconds: 59
-                })
-            } else {
-                this.setState({
-                    seconds: seconds - 1
-                });
-            }
+            this.setState(
+                seconds
+                    ? { seconds: seconds - 1 }
+                    : {
+                        minutes: minutes - 1,
+                        seconds: 59
+                    }
+            );
         }, 1000);
   
         this.setState({
@@ -62,12 +75,13 @@ export default class Timer extends Component {
         });
     }
   
-    onReset() {
+    onReset = () => {
         const { intervalId } = this.state;
+        const { workTime } = this.props;
     
         clearInterval(intervalId);
         this.setState({
-            minutes: 25,
+            minutes: workTime,
             seconds: 0,
             isActive: false
         });
@@ -77,12 +91,13 @@ export default class Timer extends Component {
   
     render() {
         const { minutes, seconds, isActive } = this.state;
+        const timerValue = `${this.padString(minutes)}:${this.padString(seconds)}`;
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.timerWrapper}>
                 <View style={styles.container}>
                     <Text style={styles.paragraph}>
-                        {this.padString(minutes)}:{this.padString(seconds)}
+                        { timerValue }
                     </Text>
                     <Image
                         style={styles.logo}
@@ -110,6 +125,9 @@ export default class Timer extends Component {
 }
   
 const styles = StyleSheet.create({
+    timerWrapper: {
+        flex: 1
+    },
     container: {
         flex: 2,
         position: 'relative',
