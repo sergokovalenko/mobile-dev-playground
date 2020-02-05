@@ -55,19 +55,18 @@ export default class Timer extends Component {
                     seconds: 0,
                     hasRest: false
                 });
+
                 return;
             }
 
-            if (!seconds) {
-                this.setState({
-                    minutes: minutes - 1,
-                    seconds: 59
-                })
-            } else {
-                this.setState({
-                    seconds: seconds - 1
-                });
-            }
+            this.setState(
+                seconds
+                    ? { seconds: seconds - 1 }
+                    : {
+                        minutes: minutes - 1,
+                        seconds: 59
+                    }
+            );
         }, 1000);
   
         this.setState({
@@ -92,12 +91,13 @@ export default class Timer extends Component {
   
     render() {
         const { minutes, seconds, isActive } = this.state;
+        const timerValue = `${this.padString(minutes)}:${this.padString(seconds)}`;
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.timerWrapper}>
                 <View style={styles.container}>
                     <Text style={styles.paragraph}>
-                        {this.padString(minutes)}:{this.padString(seconds)}
+                        { timerValue }
                     </Text>
                     <Image
                         style={styles.logo}
@@ -125,6 +125,9 @@ export default class Timer extends Component {
 }
   
 const styles = StyleSheet.create({
+    timerWrapper: {
+        flex: 1
+    },
     container: {
         flex: 2,
         position: 'relative',

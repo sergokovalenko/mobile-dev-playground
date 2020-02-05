@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-export default ({ navigation }) => {
-    const [minutes, setMinutes] = useState(25);
+const footer = ({ navigation }) => {
+    const [work, setWork] = useState(25);
     const [rest, setRest] = useState(5);
-    const updateMinutes = newVal => setMinutes(newVal);
+    const updateMinutes = newVal => setWork(newVal);
     const updateRest = newVal => setRest(newVal);
 
     return (
         <View style={styles.tabBarStyle}>
             <TouchableOpacity
                 style={[styles.tabStyle, styles.withBorder]}
-                onPress={() => navigation.navigate('Home', { minutes, rest })}
+                onPress={() => navigation.navigate('Home', { work, rest })}
             >
                 <Text style={styles.label}>Home</Text>
             </TouchableOpacity>
@@ -47,3 +47,5 @@ const styles = StyleSheet.create({
         color: 'white'
     }
 });
+
+export default footer;

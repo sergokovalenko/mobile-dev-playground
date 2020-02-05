@@ -43,7 +43,7 @@ export default class SettingsTab extends Component {
                         onPress={() => this.changeWorkTime(-1)}
                     />
                     <Text style={styles.paragraph}>
-                        {work}
+                        { work }
                     </Text>
                     <Button 
                         title=">"
@@ -59,7 +59,7 @@ export default class SettingsTab extends Component {
                         onPress={() => this.changeRestTime(-1)}
                     />
                     <Text style={styles.paragraph}>
-                        {rest}
+                        { rest }
                     </Text>
                     <Button 
                         title=">"

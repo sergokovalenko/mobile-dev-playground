@@ -1,23 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Timer from './../components/Timer';
 
-export default class App extends Component {
-	render() {
-		const work = this.props.navigation.getParam('minutes', 25);
-		const rest = this.props.navigation.getParam('rest', 5);
+const homePage = ({ navigation }) => {
+	const work = navigation.getParam('work', 25);
+	const rest = navigation.getParam('rest', 5);
 
-		return (
-			<View style={styles.container}>
-				<Text style={styles.paragraph}>
-					Pomodoro {work} x {rest} timer
-				</Text>
-				<Timer workTime={work} restTime={rest} />
-			</View>
-		);
-	}
-}
+	return (
+		<View style={styles.container}>
+			<Text style={styles.paragraph}>
+				Pomodoro {work} x {rest} timer
+			</Text>
+			<Timer workTime={work} restTime={rest} />
+		</View>
+	);
+};
 
 const styles = StyleSheet.create({
 	container: {
@@ -33,3 +31,5 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 });
+
+export default homePage;
