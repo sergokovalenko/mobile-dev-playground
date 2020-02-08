@@ -29,10 +29,16 @@ const footer = ({ navigation }) => {
                 <Text style={styles.label}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.tabStyle}
+                style={[styles.tabStyle, styles.withBorder]}
                 onPress={onSettingsTabOpen}
             >
                 <Text style={styles.label}>Settings</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.tabStyle}
+                onPress={() => navigation.navigate('About')}
+            >
+                <Text style={styles.label}>About</Text>
             </TouchableOpacity>
         </View>
     );
