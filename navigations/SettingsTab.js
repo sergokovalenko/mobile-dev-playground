@@ -24,7 +24,7 @@ export default class SettingsTab extends Component {
     changeRestTime = val => {
         const { rest } = this.state;
         const paramsChanger = this.props.navigation.getParam('updateRest', () => {});
-        const newRest = rest + val === 0 ? rest : rest + val;
+        const newRest = (rest + val === 0) ? rest : rest + val;
 
         this.setState({ rest: newRest });
         paramsChanger(newRest);
