@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, Image, Vibration } from 'react-native';
+import { Notifications } from 'expo';
 import { Audio } from 'expo-av';
 
 export default class Timer extends Component {
@@ -36,6 +37,13 @@ export default class Timer extends Component {
 
     playSound = () => this.restSound.playAsync();
 
+    pushNotification = (title, body = '') => {
+        Notifications.presentLocalNotificationAsync({
+            title,
+            body
+        });
+    }
+
     onStart = () => {
         const intervalId = setInterval(() => {
             const { minutes, seconds, hasRest, intervalId } = this.state;
@@ -43,13 +51,15 @@ export default class Timer extends Component {
 
             if (!seconds && !minutes) {
                 if (hasRest) {
+                    pushNotification('You are greate!', 'It\'s time to take a rest');
                     this.restSound.playAsync();
                 } else {
+                    pushNotification('Session end');
                     clearInterval(intervalId);
                     this.endSound.playAsync();
                 }
 
-                Vibration.vibrate(1000);
+                Vibration.vibrate(1500);
                 this.setState({
                     minutes: hasRest ? restTime : 0,
                     seconds: 0,
